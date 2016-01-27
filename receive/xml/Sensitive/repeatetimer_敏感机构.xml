@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='sensitive_org' remark='敏感信息监控' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='false' proname=''>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_mg_org'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			id,name,parentid,IFNULL(orders,0)as orders,region,IFNULL(flag,0)as flag,IFNULL(createdate,'0000-00-00 00:00:00') as createdate,now() as impdate,sub_sysid,sub_sysname
+		from tb_mg_org c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_mg_org(id,name,parentid,orders,region,flag,createdate,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_mg_org set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

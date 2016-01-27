@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='media_log' remark='介质插拔动作日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='true' proname='pro_media_action_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_media_action'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+			select 
+				actionid,year_info,month_info,year_month_info,mediaid,mediatype,mediatypename,actiontype,actiontypename,isviolation,hostip,musername,deptname,loglevel,loglevelname,actiondate,now() as impdate,sub_sysid,sub_sysname
+			from tb_media_action a
+			 where a.isreported=0 
+			limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_media_action(actionid,year_info,month_info,year_month_info,mediaid,mediatype,mediatypename,actiontype,actiontypename,isviolation,hostip,musername,deptname,loglevel,loglevelname,actiondate,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_media_action a  set a.isreported=1 where a.actionid in(@[id]) and a.isreported=0</SuccessSQL>
+ 	</log>

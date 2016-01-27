@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='sensitive_org_report' remark='敏感信息机构违规日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='false' proname=''>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_mg_org_report'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			orgid,IFNULL(reportcount,0)as reportcount,IFNULL(recordcount,0)as recordcount,IFNULL(createdate,'0000-00-00 00:00:00') as createdate,now() as impdate,sub_sysid,sub_sysname
+		from tb_mg_org_report c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_mg_org_report(orgid,reportcount,recordcount,createdate,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_mg_org_report set IsReported=1 where orgid in (@[id]) </SuccessSQL>
+ 	</log>

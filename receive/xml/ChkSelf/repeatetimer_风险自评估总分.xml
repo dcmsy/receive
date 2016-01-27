@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='tb_fxpg_assessment_list_log' remark='自评估总分' runmodel='repeatetimer' isvaldata='false' matchorgname='' isexecpro='false' proname=''>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_fxpg_assessment_list'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select
+			batchno,deptname,jsscore,glscore,taskno,sub_sysid,sub_sysname,now() as impdate,dealflag
+		from tb_fxpg_assessment_list c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>
+		insert into tb_fxpg_assessment_list(batchno,deptname,jsscore,glscore,taskno,sub_sysid,sub_sysname,impdate,dealflag,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?)
+		</InsertSQL>
+   	    <SuccessSQL>update tb_fxpg_assessment_list set IsReported=1 where batchno in (@[id]) </SuccessSQL>
+ 	</log>

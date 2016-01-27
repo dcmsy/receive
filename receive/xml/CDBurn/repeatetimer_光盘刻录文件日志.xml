@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='cdburn_log_files' remark='刻录文件日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='true' proname='pro_cdburn_files_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_cdburn_files'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select
+			id,actionid,createDate,year_info,month_info,year_month_info,deptname,username,discid,filename,filetype,filesize,sourcePath,targetPath,now() as impdate,sub_sysid,sub_sysname
+		from tb_cdburn_files c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>
+		insert into tb_cdburn_files(id,actionid,createDate,year_info,month_info,year_month_info,deptname,username,discid,filename,filetype,filesize,sourcePath,targetPath,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</InsertSQL>
+   	    <SuccessSQL>update tb_cdburn_files set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

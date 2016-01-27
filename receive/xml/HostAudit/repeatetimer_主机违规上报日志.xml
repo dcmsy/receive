@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='hostaudit_violation' remark='主机违规上报日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='false' proname=''>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_hostaudit_illegal'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			id,year_info,month_info,year_month_info,hostid,hdid,mac,deptname,hostip,username,audittypename,isViolation,hostname,object,recorddate,details,remark,nodeid,objectname,producttype,program,facility,result,now() as impdate,sub_sysid,sub_sysname
+		from tb_hostaudit_illegal c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_hostaudit_illegal(id,year_info,month_info,year_month_info,hostid,hdid,mac,deptname,hostip,username,audittypename,isViolation,hostname,object,recorddate,details,remark,nodeid,objectname,producttype,program,facility,result,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</InsertSQL>
+   	    <SuccessSQL>update tb_hostaudit_illegal set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

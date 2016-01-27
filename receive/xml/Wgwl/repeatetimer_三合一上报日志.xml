@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='alarm_log' remark='三合一外联日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='false' proname=''>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_alarm_log'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			logid,hostname,zone,unitid,unitname,deptid,deptname,userid,username,ncard,mac,hostip,os,mboard,hdid,ver,IFNULL(logdate,'0000-00-00 00:00:00') as logdate,logdesc,company,reserve,IFNULL(receiveDate,'0000-00-00') as receiveDate,IFNULL(processDate,'0000-00-00 00:00:00') as processDate,processFlag,resultInfo,program,now() as impdate,stddeptid,impsyscode,impsysname
+		from tb_alarm_log c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_alarm_log(logid,hostname,zone,unitid,unitname,deptid,deptname,userid,username,ncard,mac,hostip,os,mboard,hdid,ver,logdate,logdesc,company,reserve,receiveDate,processDate,processFlag,resultInfo,program,impdate,stddeptid,impsyscode,impsysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_alarm_log set IsReported=1 where logid in (@[id]) </SuccessSQL>
+ 	</log>

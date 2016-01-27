@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='ga_media_log' remark='介质操作日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='true' proname='pro_ga_media_action_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_ga_mediainfo_log'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+			select 
+				id,year_info,month_info,year_month_info,logtype,logtypename,deptname,isviolation,srcpath,destpath,filename,fileid,computername,computerusername,hdid,hostip,mac,filesize,file_create_time,file_modify_time,inside_lan,lan_sign,mediaid,sn,factoryname,createdate,log_version,reserve,type,typename,state,statename,username,loglevel,loglevelname,now() as impdate,oper_flag,sub_sysid,sub_sysname
+			from tb_ga_mediainfo_log a
+			 where a.isreported=0 
+			limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_ga_mediainfo_log(id,year_info,month_info,year_month_info,logtype,logtypename,deptname,isviolation,srcpath,destpath,filename,fileid,computername,computerusername,hdid,hostip,mac,filesize,file_create_time,file_modify_time,inside_lan,lan_sign,mediaid,sn,factoryname,createdate,log_version,reserve,type,typename,state,statename,username,loglevel,loglevelname,impdate,oper_flag,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_ga_mediainfo_log a  set a.isreported=1 where a.actionid in(@[id]) and a.isreported=0</SuccessSQL>
+ 	</log>

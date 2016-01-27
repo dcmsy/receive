@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='netcheck_notcheck' remark='用户未自查主机日志' runmodel='singletimer' isvaldata='true' matchorgname='deptname' isexecpro='true' proname='pro_tb_netcheck_notcheck_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_netcheck_notcheck where logicid=?</DeleteByIDSQL>	
+		<DataSQL>
+         select
+				logicid,id,unitname,deptname,year_info,month_info,year_month_info,username,ownerid,ownername,hostid,hostname,hdid,mboard,ip,mac,now() as impdate,oper_flag,sub_sysid,sub_sysname,stdunitid
+			 from tb_netcheck_notcheck m
+		 where m.isreported='0'
+        </DataSQL>
+		<InsertSQL>insert into tb_netcheck_notcheck(logicid,id,unitname,deptname,year_info,month_info,year_month_info,username,ownerid,ownername,hostid,hostname,hdid,mboard,ip,mac,impdate,oper_flag,sub_sysid,sub_sysname,stdunitid,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+		<SuccessSQL>update tb_netcheck_notcheck set IsReported='1' where logicid in (@[id]) </SuccessSQL>
+ 	</log>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='media_log_files' remark='介质动作明细日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='true' proname='pro_media_files_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_media_files'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			id,year_info,month_info,year_month_info,actionid,srcPath,destPath,actionType,actiontypename,loglevel,loglevelname,createdate,username,deptname,now() as impdate,sub_sysid,sub_sysname
+		from tb_media_files c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_media_files(id,year_info,month_info,year_month_info,actionid,srcPath,destPath,actionType,actiontypename,loglevel,loglevelname,createdate,username,deptname,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_media_files set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

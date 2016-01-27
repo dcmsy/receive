@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='sensitive_info' remark='敏感信息日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='true' proname='pro_sensitive_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_mg_sensitive_info'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			id,year_info,month_info,year_month_info,filecode,name,summary,keyword,srclocation,destlocation,action,actionname,feature,computername,hdid,hostip,mac,computerlocation,username,authname,entrystamp,dealdate,deptname,now() as impdate,sub_sysid,sub_sysname,dealflag,mglevel,mglevelname
+		from tb_mg_sensitive_info c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_mg_sensitive_info(id,year_info,month_info,year_month_info,filecode,name,summary,keyword,srclocation,destlocation,action,actionname,feature,computername,hdid,hostip,mac,computerlocation,username,authname,entrystamp,dealdate,deptname,impdate,sub_sysid,sub_sysname,dealflag,mglevel,mglevelname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_mg_sensitive_info set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

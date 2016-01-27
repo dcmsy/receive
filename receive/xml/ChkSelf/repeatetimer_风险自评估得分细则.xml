@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='tb_fxpg_assessment_item_result_log' remark='评估得分细则' runmodel='repeatetimer' isvaldata='false' matchorgname='' isexecpro='false' proname=''>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_fxpg_assessment_item_result'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			id,batchno,rootcode,rootcontent,rootfullgrade,rootgrade,parentcode,parentcontent,parentfullgrade,parentgrade,itemcode,itemcontent,itemfullgrade,itemgrade,subcode,subcontent,subfullgrade,subgrade,itemdemand,standardcode,standardcontent,standardfullgrade,standardgrade,iscompliance,suggestion,sub_sysid,sub_sysname,now() as impdate,dealflag
+		from tb_fxpg_assessment_item_result c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>
+		insert into tb_fxpg_assessment_item_result(id,batchno,rootcode,rootcontent,rootfullgrade,rootgrade,parentcode,parentcontent,parentfullgrade,parentgrade,itemcode,itemcontent,itemfullgrade,itemgrade,subcode,subcontent,subfullgrade,subgrade,itemdemand,standardcode,standardcontent,standardfullgrade,standardgrade,iscompliance,suggestion,sub_sysid,sub_sysname,impdate,dealflag,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</InsertSQL>
+   	    <SuccessSQL>update tb_fxpg_assessment_item_result set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='netcheck' remark='保密安全检查结果日志' runmodel='singletimer' isvaldata='true' matchorgname='deptname' isexecpro='true' proname='pro_tb_netcheck_result_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_netcheck_result where id=?</DeleteByIDSQL>	
+		<DataSQL>
+         select
+				id,unitid,unitname,batchno,deptname,year_info,month_info,year_month_info,hostid,hostname,username,office,ownerid,ownername,seclevel,createDate,checkItem,checkItem_name,isViolation,violationlevel,violationdesc,hdid,mboard,ip,mac,now() as impdate,program,remark, oper_flag,sub_sysid,sub_sysname,stdunitid
+			 from tb_netcheck_result m
+		 where m.isreported='0'
+        </DataSQL>
+		<InsertSQL>insert into tb_netcheck_result(id,unitid,unitname,batchno,deptname,year_info,month_info,year_month_info,hostid,hostname,username,office,ownerid,ownername,seclevel,createDate,checkItem,checkItem_name,isViolation,violationlevel,violationdesc,hdid,mboard,ip,mac,impdate,program,remark, oper_flag,sub_sysid,sub_sysname,stdunitid,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+		<SuccessSQL>update tb_netcheck_result set IsReported='1' where id in (@[id]) </SuccessSQL>
+ 	</log>

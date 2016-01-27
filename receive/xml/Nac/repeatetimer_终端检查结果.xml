@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='nac_node_check' remark='终端检查结果' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='true' proname='pro_nac_node_check_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_nac_node_check'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			id,checkid,mac,year_info,month_info,year_month_info,computer,username,checkdate,IFNULL(logdate,'0000-00-00 00:00:00')as logdate,checkpolicyname,checkItem,checkitemname,itemresult,itemresultname,result,resultname,remark,iskeyitem,iskeyitemname,deptname,now() as impdate,sub_sysid,sub_sysname
+		from tb_nac_node_check c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_nac_node_check(id,checkid,mac,year_info,month_info,year_month_info,computer,username,checkdate,logdate,checkpolicyname,checkItem,checkitemname,itemresult,itemresultname,result,resultname,remark,iskeyitem,iskeyitemname,deptname,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_nac_node_check set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

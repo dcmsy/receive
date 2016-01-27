@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='safetydisk_operate_log' remark='涉密优盘文件日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='true' proname='pro_safety_oper_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_safetydisk_operate_log'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			id,year_info,month_info,year_month_info,disksn,actionType,actiontypename,scope,hostid,hdid,hostip,hostname,unitname,deptname,username,disk_username,processPath,filename,srcPath,destPath,createdate,now() as impdate,sub_sysid,sub_sysname
+		from tb_safetydisk_operate_log c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_safetydisk_operate_log(id,year_info,month_info,year_month_info,disksn,actionType,actiontypename,scope,hostid,hdid,hostip,hostname,unitname,deptname,username,disk_username,processPath,filename,srcPath,destPath,createdate,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</InsertSQL>
+   	    <SuccessSQL>update tb_safetydisk_operate_log set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- 以下根据需要可对数据进行加密 -->
+    <log filename='print_log' remark='打印审计日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='true' proname='pro_print_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_print_log'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			id,year_info,month_info,year_month_info,username,deptname,hostname,hostip,hostid,hdid,isViolation,mac,filename,filetype,beginDate,IFNULL(endDate,'0000-00-00 00:00:00') as endDate,printerName,pagenum,copies,printstate,printstatename,seclevel,seclevelname,trim(IsSensitivity) as IsSensitivity ,trim(IsSensitivityname) as IsSensitivityname,trim(isSide)as isside,trim(issidename) as issidename ,trim(isImg) as isimg,pageSize,iscolor,SensitivityContent,dirdocname,delCopies,endDelcopies,direction,iscallback,iscallbackname,excuse,auditname,accName,infofrom,logtype,now() as impdate,sub_sysid,sub_sysname
+		from tb_print_log c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_print_log(id,year_info,month_info,year_month_info,username,deptname,hostname,hostip,hostid,hdid,isViolation,mac,filename,filetype,beginDate,endDate,printerName,pagenum,copies,printstate,printstatename,seclevel,seclevelname,IsSensitivity,IsSensitivityname,isSide,issidename,isImg,pageSize,iscolor,SensitivityContent,dirdocname,delCopies,endDelcopies,direction,iscallback,iscallbackname,excuse,auditname,accName,infofrom,logtype,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_print_log set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='ga_media_info' remark='介质基本信息' runmodel='singletimer' isvaldata='true' matchorgname='deptname' isexecpro='true' proname='pro_ga_media_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_ga_media_info where id=?</DeleteByIDSQL>	
+		<DataSQL>
+         select 
+			id,year_info,month_info,year_month_info,sn,type,typename,state,statename,username,deptname,volume,pid,vid,factoryname,unitname,orgcode,remark,regdate,unregdate,now() as impdate,oper_type,sub_sysid,sub_sysname
+		 from tb_ga_media_info m
+		 where m.isreported='0'
+        </DataSQL>
+		<InsertSQL>insert into tb_ga_media_info(id,year_info,month_info,year_month_info,sn,type,typename,state,statename,username,deptname,volume,pid,vid,factoryname,unitname,orgcode,remark,regdate,unregdate,impdate,oper_type,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_ga_media_info set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

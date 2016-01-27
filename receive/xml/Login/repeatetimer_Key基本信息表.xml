@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='tb_seclogon_key_info' remark='Key基本信息' runmodel='singletimer' isvaldata='true' matchorgname='' isexecpro='false' proname=''>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_seclogon_key where key_sn=?</DeleteByIDSQL>	
+		<DataSQL>
+         select 
+			key_sn,remark,create_time,now() as impdate,sub_sysid,sub_sysname,oper_flag
+		 from tb_seclogon_key m
+		 where m.isreported='0'
+        </DataSQL>
+		<InsertSQL>insert into tb_seclogon_key(key_sn,remark,create_time,impdate,sub_sysid,sub_sysname,oper_flag,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_seclogon_key set isreported=1 where key_sn in (@[id]) </SuccessSQL>
+ 	</log>

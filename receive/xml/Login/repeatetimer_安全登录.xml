@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='safelogin_log' remark='安全登录日志' runmodel='repeatetimer' isvaldata='false' matchorgname='dept_name' isexecpro='false' proname=''>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_safelogin_key_event'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			id,key_info,op_type,IFNULL(op_time,'0000-00-00 00:00:00') as op_time,host_name,dept_name,user_name,logon_user,host_ip,host_id,dealflag,now() as impdate,sub_sysid,sub_sysname
+		from tb_safelogin_key_event c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>
+		insert into tb_safelogin_key_event(id,key_info,op_type,op_time,host_name,dept_name,user_name,logon_user,host_ip,host_id,dealflag,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</InsertSQL>
+   	    <SuccessSQL>update tb_safelogin_key_event set isreported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

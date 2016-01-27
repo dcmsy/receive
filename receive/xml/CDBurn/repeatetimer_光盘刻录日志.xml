@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='cdburn_log' remark='光盘刻录日志' runmodel='repeatetimer' isvaldata='false' matchorgname='deptname' isexecpro='true' proname='pro_cdburn_action_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_cdburn_action'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+		select 
+			actionid,year_info,month_info,year_month_info,createDate,discCode,authmode,discType,disctypename,discPhytype,discphytypename,discVolume,hostid,hostname,auditor,flowType,optype,optypename,beginDate,endDate,burnIp,burnMac,errCode,completeness,IFNULL(burnCount,0)as burnCount,IFNULL(burnSize,0)as burnSize,deptname,nodeid,compend,detail,seclevel,seclevelname,cdRecord,accName,discRange,resname,remark,auditCode,auditName,cdstate,cdstatename,program,isviolation,now() as impdate,sub_sysid,sub_sysname
+		from tb_cdburn_action c
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>
+		insert into tb_cdburn_action(actionid,year_info,month_info,year_month_info,createDate,discCode,authmode,discType,disctypename,discPhytype,discphytypename,discVolume,hostid,hostname,auditor,flowType,optype,optypename,beginDate,endDate,burnIp,burnMac,errCode,completeness,burnCount,burnSize,deptname,nodeid,compend,detail,seclevel,seclevelname,cdRecord,accName,discRange,resname,remark,auditCode,auditName,cdstate,cdstatename,program,isviolation,impdate,sub_sysid,sub_sysname,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</InsertSQL>
+   	    <SuccessSQL>update tb_cdburn_action set IsReported=1 where actionid in (@[id]) </SuccessSQL>
+ 	</log>

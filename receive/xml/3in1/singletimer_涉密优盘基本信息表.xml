@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='safetydisk_info' remark='涉密优盘基本信息' runmodel='singletimer' isvaldata='true' matchorgname='deptname' isexecpro='true' proname='pro_safety_info_deal'>
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_safetydisk_info where disksn=?</DeleteByIDSQL>	
+		<DataSQL>
+         select
+			disksn,year_info,month_info,year_month_info,scope,diskstate,unitname,deptname,username,ProducerID,pid,vid,regdate,unregdate,now() as impdate,sub_sysid,sub_sysname,oper_flag
+		 from tb_safetydisk_info m
+		 where m.isreported='0'
+        </DataSQL>
+		<InsertSQL>insert into tb_safetydisk_info(disksn,year_info,month_info,year_month_info,scope,diskstate,unitname,deptname,username,ProducerID,pid,vid,regdate,unregdate,impdate,sub_sysid,sub_sysname,oper_flag,stdorgid,stdorgname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+		<SuccessSQL>update tb_safetydisk_info set IsReported=1 where disksn in (@[id]) </SuccessSQL>
+ 	</log>
